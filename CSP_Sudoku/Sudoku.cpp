@@ -17,14 +17,14 @@ Sudoku::Sudoku(const string& file) {
 			line.erase(6, 1);
 			
 			for (int k = 0; k < 9; k++) {
-				char characer = line.at(k);
-				if (characer - '0' == -2) {
+				char character = line.at(k);
+				if (character - '0' == -2) {
 					startingGrid[l][k] = -1;
 					grid[l][k] = -1;
 				}
 				else {
-					startingGrid[l][k] = characer - '0';
-					grid[l][k] = characer - '0';
+					startingGrid[l][k] = character - '0';
+					grid[l][k] = character - '0';
 				}
 			}
 		}
@@ -40,8 +40,12 @@ int Sudoku::get(int i, int j) {
 }
 
 char Sudoku::getChar(int i, int j, int grid[9][9]) {
-	if (this->grid[i][j] == -1) return ' ';
-	else return this->grid[i][j] + 48;
+	if (this->grid[i][j] == -1){
+        return ' ';
+	}
+	else{
+        return this->grid[i][j] + 48;
+	}
 }
 
 void Sudoku::print(int grid[9][9]) {

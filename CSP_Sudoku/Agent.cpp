@@ -80,24 +80,24 @@ int Agent::countConstraints(Sudoku sdk) {
 	return constraintCounter;
 }
 
-Sudoku Agent::backtrackingSearch(Sudoku sdk) {
+Sudoku Agent::backtrackingSearch(const Sudoku& sdk) {
 	pair<Sudoku, bool> result = recursiveBacktrackingSearch(sdk);
 	return result.first;
 }
 
-pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sudoku) {
-	list<Pair> empty = sudoku.getEmptyCells();
-	if (empty.empty()) return make_pair(sudoku, true);
+pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
+	list<Pair> empty = sdk.getEmptyCells();
+	if (empty.empty()) return make_pair(sdk, true);
 
-	Pair var = MinimumRemainingValues(sudoku);
+	Pair var = MinimumRemainingValues(sdk);
 	//Pair var = DegreeHeuristic(sudoku);
-	list<int> legalValues = sudoku.getLegalValues(var.first, var.second);
+	list<int> legalValues = sdk.getLegalValues(var.first, var.second);
 	while (!legalValues.empty()) {
 		
 		int value = legalValues.front();
 		legalValues.pop_front();
 
-		Sudoku copy = sudoku.copy();
+		Sudoku copy = sdk.copy();
 		copy.set(var.first, var.second, value);
 		
 		pair<Sudoku, bool> result = recursiveBacktrackingSearch(copy);
@@ -106,5 +106,9 @@ pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sudoku) {
             return result;
 		}
 	}
-	return make_pair(sudoku, false);
+	return make_pair(sdk, false);
+}
+
+Pair Agent::LeastConstrainingValue(Sudoku sdk) {
+    return Pair();
 }

@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 
 using namespace std;
 typedef pair<int, int> Pair;
@@ -17,7 +17,9 @@ private:
 public:
 	Sudoku();
 	explicit Sudoku(const string& file);
-	int get(int i, int y);
+    virtual ~Sudoku() = default;
+
+    int get(int i, int y);
 	void set(int i, int y, int value);
 	void printStartingGrid();
 	void printGrid();
