@@ -3,7 +3,7 @@
 
 Sudoku::Sudoku() {}
 
-Sudoku::Sudoku(string file) {
+Sudoku::Sudoku(const string& file) {
 	fstream fs;
 	fs.open(file, fstream::in);
 
@@ -79,7 +79,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (value != -1) isLegal[value - 1] = false;
 	}
 
-	// parcours le carré 1
+	// parcours le carrï¿½ 1
 	if (i < 3 && j < 3) {
 		if (get(0, 0) != -1) isLegal[get(0, 0) - 1] = false;
 		if (get(1, 0) != -1) isLegal[get(1, 0) - 1] = false;
@@ -91,7 +91,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(1, 2) != -1) isLegal[get(1, 2) - 1] = false;
 		if (get(2, 2) != -1) isLegal[get(2, 2) - 1] = false;
 	}
-	// parcours le carré 2
+	// parcours le carrï¿½ 2
 	if (i < 3 && j > 2 && j < 6) {
 		if (get(0, 3) != -1) isLegal[get(0, 3) - 1] = false;
 		if (get(1, 3) != -1) isLegal[get(1, 3) - 1] = false;
@@ -103,7 +103,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(1, 5) != -1) isLegal[get(1, 5) - 1] = false;
 		if (get(2, 5) != -1) isLegal[get(2, 5) - 1] = false;
 	}
-	// parcours le carré 3
+	// parcours le carrï¿½ 3
 	if (i < 3 && j > 5) {
 		if (get(0, 6) != -1) isLegal[get(0, 6) - 1] = false;
 		if (get(1, 6) != -1) isLegal[get(1, 6) - 1] = false;
@@ -115,7 +115,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(1, 8) != -1) isLegal[get(1, 8) - 1] = false;
 		if (get(2, 8) != -1) isLegal[get(2, 8) - 1] = false;
 	}
-	// parcours le carré 4
+	// parcours le carrï¿½ 4
 	if (i > 2 && i < 6 && j < 3) {
 		if (get(3, 0) != -1) isLegal[get(3, 0) - 1] = false;
 		if (get(3, 0) != -1) isLegal[get(3, 0) - 1] = false;
@@ -127,7 +127,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(5, 2) != -1) isLegal[get(5, 2) - 1] = false;
 		if (get(5, 2) != -1) isLegal[get(5, 2) - 1] = false;
 	}
-	// parcours le carré 5
+	// parcours le carrï¿½ 5
 	if (i > 2 && i < 6 && j > 2 && j < 6) {
 		if (get(3, 3) != -1) isLegal[get(3, 3) - 1] = false;
 		if (get(3, 3) != -1) isLegal[get(3, 3) - 1] = false;
@@ -139,7 +139,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(5, 5) != -1) isLegal[get(5, 5) - 1] = false;
 		if (get(5, 5) != -1) isLegal[get(5, 5) - 1] = false;
 	}
-	// parcours le carré 6
+	// parcours le carrï¿½ 6
 	if (i > 2 && i < 6 && j > 5) {
 		if (get(3, 6) != -1) isLegal[get(3, 6) - 1] = false;
 		if (get(3, 6) != -1) isLegal[get(3, 6) - 1] = false;
@@ -151,7 +151,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(5, 8) != -1) isLegal[get(5, 8) - 1] = false;
 		if (get(5, 8) != -1) isLegal[get(5, 8) - 1] = false;
 	}
-	// parcours le carré 7
+	// parcours le carrï¿½ 7
 	if (i > 5 && j < 3) {
 		if (get(6, 0) != -1) isLegal[get(6, 0) - 1] = false;
 		if (get(6, 0) != -1) isLegal[get(6, 0) - 1] = false;
@@ -163,7 +163,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(8, 2) != -1) isLegal[get(8, 2) - 1] = false;
 		if (get(8, 2) != -1) isLegal[get(8, 2) - 1] = false;
 	}
-	// parcours le carré 8
+	// parcours le carrï¿½ 8
 	if (i > 5 && j > 2 && j < 6) {
 		if (get(6, 3) != -1) isLegal[get(6, 3) - 1] = false;
 		if (get(6, 3) != -1) isLegal[get(6, 3) - 1] = false;
@@ -175,7 +175,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(8, 5) != -1) isLegal[get(8, 5) - 1] = false;
 		if (get(8, 5) != -1) isLegal[get(8, 5) - 1] = false;
 	}
-	// parcours le carré 9
+	// parcours le carrï¿½ 9
 	if (i > 5 && j > 5) {
 		if (get(6, 6) != -1) isLegal[get(6, 6) - 1] = false;
 		if (get(6, 6) != -1) isLegal[get(6, 6) - 1] = false;
@@ -188,7 +188,7 @@ list<int> Sudoku::getLegalValues(int i, int j) {
 		if (get(8, 8) != -1) isLegal[get(8, 8) - 1] = false;
 	}
 
-	// liste les valeurs légales
+	// liste les valeurs lï¿½gales
 	for (int k = 0; k < 9; k++) {
 		if (isLegal[k]) legalValues.push_back(k+1);
 	}
@@ -206,7 +206,7 @@ list<Pair> Sudoku::getEmptyCells() {
 
 	for (int i = 0; i < 9; i++)
 		for (int j = 0; j < 9; j++)
-			if (get(i, j) == -1) empty.push_back(make_pair(i, j));
+			if (get(i, j) == -1) empty.emplace_back(i, j);
 	return empty;
 }
 

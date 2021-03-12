@@ -16,7 +16,7 @@ private:
 
 public:
 	Sudoku();
-	Sudoku(string file);
+	explicit Sudoku(const string& file);
 	int get(int i, int y);
 	void set(int i, int y, int value);
 	void printStartingGrid();
