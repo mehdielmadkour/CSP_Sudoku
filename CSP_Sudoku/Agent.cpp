@@ -18,8 +18,8 @@ Agent::Agent(Sudoku sudoku) {
 	result.printGrid();
 }
 
-Pair Agent::MinimumRemainingValues(Sudoku sdk) {
-	
+Pair Agent::MinimumRemainingValue(Sudoku sdk) {
+
 	list<Pair> empty = sdk.getEmptyCells();
 	Pair var = empty.front();
 	empty.pop_front();
@@ -39,30 +39,54 @@ Pair Agent::MinimumRemainingValues(Sudoku sdk) {
 	return var;
 }
 
-Pair Agent::DegreeHeuristic(Sudoku sdk) {
+list<Pair> Agent::MinimumRemainingValues(Sudoku sdk) {
 	
 	list<Pair> empty = sdk.getEmptyCells();
+	list<Pair> vars;
 	Pair var = empty.front();
 	empty.pop_front();
-	int constraintCounter = countConstraints(sdk);
+	vars.push_back(var);
+	int legalValueCounter = sdk.countLegalValues(var.first, var.second);
 
 	while (!empty.empty()) {
 		Pair varExplored = empty.front();
 		empty.pop_front();
+		int legalValueCounterExplored = sdk.countLegalValues(varExplored.first, varExplored.second);
+
+		if (legalValueCounterExplored < legalValueCounter) {
+			legalValueCounter = legalValueCounterExplored;
+			var = varExplored;
+			vars.clear();
+		}
+		if (legalValueCounterExplored == legalValueCounter) {
+			vars.push_back(varExplored);
+		}
+	}
+
+	return vars;
+}
+
+Pair Agent::DegreeHeuristic(Sudoku sdk) {
+	
+	list<Pair> vars = MinimumRemainingValues(sdk);
+	Pair var = vars.front();
+	vars.pop_front();
+	int constraintCounter = countConstraints(sdk);
+	while (!vars.empty()) {
+		Pair varExplored = vars.front();
+		vars.pop_front();
 		Sudoku copy = sdk.copy();
 		list<int> legalValues = sdk.getLegalValues(varExplored.first, varExplored.second);
-		//cout << legalValues.size() << endl;
+		
 		if (!legalValues.empty()) {
 			copy.set(varExplored.first, varExplored.second, legalValues.front());
 			int constraintCounterExplored = countConstraints(copy);
-
 			if (constraintCounterExplored > constraintCounter) {
 				constraintCounter = constraintCounterExplored;
 				var = varExplored;
 			}
 		}
 	}
-
 	return var;
 }
 
@@ -87,11 +111,13 @@ Sudoku Agent::backtrackingSearch(const Sudoku& sdk) {
 }
 
 pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
+	//sdk.printGrid();
 	list<Pair> empty = sdk.getEmptyCells();
 	if (empty.empty()) return make_pair(sdk, true);
 
-	Pair var = MinimumRemainingValues(sdk);
-	//Pair var = DegreeHeuristic(sudoku);
+	//Pair var = MinimumRemainingValue(sdk);
+	Pair var = DegreeHeuristic(sdk);
+
 	list<int> legalValues = sdk.getLegalValues(var.first, var.second);
 	while (!legalValues.empty()) {
 		

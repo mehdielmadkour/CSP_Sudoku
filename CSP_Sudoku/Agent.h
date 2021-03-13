@@ -1,10 +1,12 @@
 #pragma once
 #include "Sudoku.h"
+#include <list>
 
 class Agent {
 private:
 	Sudoku sudoku;
-	Pair MinimumRemainingValues(Sudoku sdk);
+	Pair MinimumRemainingValue(Sudoku sdk);
+	list<Pair> MinimumRemainingValues(Sudoku sdk);
 	Pair DegreeHeuristic(Sudoku sudoku);
 	Pair LeastConstrainingValue(Sudoku sudoku);
 	Sudoku backtrackingSearch(const Sudoku& sdk);
