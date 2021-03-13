@@ -4,15 +4,17 @@
 #include <fstream>
 #include <iostream>
 #include <cstdio>
+#include <array>
 
 using namespace std;
 typedef pair<int, int> Pair;
+typedef array<array<char, 9>, 9> Grid;
+
 class Sudoku {
 private:
-	int startingGrid[9][9];
-	int grid[9][9];
-	char getChar(int i, int y, int grid[9][9]);
-	void print(int grid[9][9]);
+	Grid grid;
+	char getChar(int i, int y);
+
 
 public:
 	Sudoku();
@@ -21,11 +23,11 @@ public:
 
     int get(int i, int y);
 	void set(int i, int y, int value);
-	void printStartingGrid();
-	void printGrid();
+
+    void printGrid();
+
 	int countLegalValues(int i, int j);
 	list<int> getLegalValues(int i, int j);
 	list<Pair> getEmptyCells();
 	Sudoku copy();
-	bool isValid();
 };

@@ -3,12 +3,13 @@
 Agent::Agent(Sudoku sudoku) {
 	this->sudoku = sudoku;
 
-	Sudoku result = backtrackingSearch(sudoku);
-
 	cout << "---------------------" << endl;
 	cout << "   Grille initiale" << endl;
 	cout << "---------------------" << endl;
-	sudoku.printStartingGrid();
+	sudoku.printGrid();
+
+    Sudoku result = backtrackingSearch(sudoku);
+
 	cout << endl;
 	cout << "---------------------" << endl;
 	cout << "    Grille finale    " << endl;
@@ -109,6 +110,6 @@ pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
 	return make_pair(sdk, false);
 }
 
-Pair Agent::LeastConstrainingValue(Sudoku sdk) {
+Pair Agent::LeastConstrainingValue(Sudoku sudoku) {
     return Pair();
 }

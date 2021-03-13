@@ -19,11 +19,9 @@ Sudoku::Sudoku(const string& file) {
 			for (int k = 0; k < 9; k++) {
 				char character = line.at(k);
 				if (character - '0' == -2) {
-					startingGrid[l][k] = -1;
 					grid[l][k] = -1;
 				}
 				else {
-					startingGrid[l][k] = character - '0';
 					grid[l][k] = character - '0';
 				}
 			}
@@ -39,33 +37,35 @@ int Sudoku::get(int i, int j) {
 	return this->grid[i][j];
 }
 
-char Sudoku::getChar(int i, int j, int grid[9][9]) {
-	if (this->grid[i][j] == -1){
+char Sudoku::getChar(int i, int j) {
+	if (grid[i][j] == -1){
         return ' ';
 	}
 	else{
-        return this->grid[i][j] + 48;
+        return (char)(grid[i][j] + 48);
 	}
-}
-
-void Sudoku::print(int grid[9][9]) {
-	for (int i = 0; i < 9; i++) {
-		cout << getChar(i, 0, grid) << "|" << getChar(i, 1, grid) << "|" << getChar(i, 2, grid) << " | " << getChar(i, 3, grid) << "|" << getChar(i, 4, grid) << "|" << getChar(i, 5, grid) << " | " << getChar(i, 6, grid) << "|" << getChar(i, 7, grid) << "|" << getChar(i, 8, grid) << endl;
-		if (i == 2 || i == 5) {
-			cout << "======|=======|=======" << endl;
-		}
-		else {
-			if (i != 8) cout << "-|-|- | -|-|- | -|-|-" << endl;
-		}
-	}
-}
-
-void Sudoku::printStartingGrid() {
-	print(this->startingGrid);
 }
 
 void Sudoku::printGrid() {
-	print(this->grid);
+	for (int i = 0; i < 9; i++) {
+	    for(unsigned short j = 0; j < 9; j++){
+            cout << getChar(i, j);
+            if (j != 2 && j != 5){
+                cout << "|";
+            }
+            else {
+                cout << " | ";
+            }
+        }
+		cout << endl;
+
+		if (i == 2 || i == 5) {
+			cout << "======|=======|=======" << endl;
+		}
+		else if (i != 8){
+			cout << "-|-|- | -|-|- | -|-|-" << endl;
+		}
+	}
 }
 
 list<int> Sudoku::getLegalValues(int i, int j) {
@@ -219,7 +219,6 @@ Sudoku Sudoku::copy() {
 	for (int i = 0; i < 9; i++)
 		for (int j = 0; j < 9; j++) {
 			copy.grid[i][j] = this->grid[i][j];
-			copy.startingGrid[i][j] = this->startingGrid[i][j];
 		}
 	return copy;
 }
