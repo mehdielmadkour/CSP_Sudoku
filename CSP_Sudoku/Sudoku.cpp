@@ -208,9 +208,12 @@ int Sudoku::countLegalValues(int i, int j) {
 list<Pair> Sudoku::getEmptyCells() {
 	list<Pair> empty;
 
-	for (int i = 0; i < 9; i++)
-		for (int j = 0; j < 9; j++)
-			if (get(i, j) == -1) empty.emplace_back(i, j);
+	for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            if (get(i, j) == -1) empty.emplace_back(i, j);
+        }
+	}
+
 	return empty;
 }
 
