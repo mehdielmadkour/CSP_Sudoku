@@ -1,7 +1,6 @@
 #include "Agent.h"
 
-Agent::Agent(Sudoku sudoku) {
-	this->sudoku = sudoku;
+Agent::Agent(Sudoku sudoku): sudoku(sudoku) {
 
 	cout << "---------------------" << endl;
 	cout << "   Grille initiale" << endl;
@@ -61,13 +60,13 @@ list<Pair> Agent::MinimumRemainingValues(Sudoku sdk) {
 
 		int legalValueCounterExplored = sdk.countLegalValues(var.first, var.second);
 
-		// réinitialise la liste si une valeur plus faible est trouvée
+		// rï¿½initialise la liste si une valeur plus faible est trouvï¿½e
 		if (legalValueCounterExplored < legalValueCounter) {
 			legalValueCounter = legalValueCounterExplored;
 			vars.clear();
 		}
 
-		// ajoute la case à la liste si le nombre de valeur possible est le plus faible
+		// ajoute la case ï¿½ la liste si le nombre de valeur possible est le plus faible
 		if (legalValueCounterExplored == legalValueCounter) {
 			vars.push_back(var);
 		}
@@ -93,8 +92,8 @@ Pair Agent::DegreeHeuristic(Sudoku sdk) {
 
 		if (!legalValues.empty()) {
 
-			// determine le nombre de contrainte à l'étape suivante
-			Sudoku copy = sdk.copy();
+			// determine le nombre de contrainte ï¿½ l'ï¿½tape suivante
+			Sudoku copy = sdk;
 			copy.set(varExplored.first, varExplored.second, legalValues.front());
 			int constraintCounterExplored = countConstraints(copy);
 
@@ -134,7 +133,7 @@ pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
 	list<Pair> empty = sdk.getEmptyCells();
 	if (empty.empty()) return make_pair(sdk, true);
 
-	// détermine la case à explorer
+	// dï¿½termine la case ï¿½ explorer
 	Pair var = MinimumRemainingValue(sdk);
 	//Pair var = DegreeHeuristic(sdk);
 
@@ -146,7 +145,7 @@ pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
 		int value = legalValues.front();
 		legalValues.pop_front();
 
-		Sudoku copy = sdk.copy();
+		Sudoku copy = sdk;
 		copy.set(var.first, var.second, value);
 		
 		pair<Sudoku, bool> result = recursiveBacktrackingSearch(copy);

@@ -15,9 +15,7 @@ private:
 	Grid grid;
 	char getChar(int i, int y);
 
-
 public:
-	Sudoku();
 	explicit Sudoku(const string& file);
     virtual ~Sudoku() = default;
 
@@ -29,5 +27,4 @@ public:
 	int countLegalValues(int i, int j);
 	list<int> getLegalValues(int i, int j);
 	list<Pair> getEmptyCells();
-	Sudoku copy();
 };
