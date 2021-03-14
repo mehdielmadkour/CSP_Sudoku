@@ -25,9 +25,12 @@ Pair Agent::MinimumRemainingValue(Sudoku sdk) {
 	empty.pop_front();
 	int legalValueCounter = sdk.countLegalValues(var.first, var.second);
 
+	//parcours les case non vide et conserve celle ayant le moins de valeurs possible
 	while (!empty.empty()) {
+
 		Pair varExplored = empty.front();
 		empty.pop_front();
+
 		int legalValueCounterExplored = sdk.countLegalValues(varExplored.first, varExplored.second);
 
 		if (legalValueCounterExplored < legalValueCounter) {
@@ -40,26 +43,33 @@ Pair Agent::MinimumRemainingValue(Sudoku sdk) {
 }
 
 list<Pair> Agent::MinimumRemainingValues(Sudoku sdk) {
-	
+
 	list<Pair> empty = sdk.getEmptyCells();
-	list<Pair> vars;
 	Pair var = empty.front();
 	empty.pop_front();
+
+	list<Pair> vars;
 	vars.push_back(var);
+
 	int legalValueCounter = sdk.countLegalValues(var.first, var.second);
 
+	// parcours les cases non vide et conserve la liste de celles ayant le moins de valeurs possible
 	while (!empty.empty()) {
-		Pair varExplored = empty.front();
-		empty.pop_front();
-		int legalValueCounterExplored = sdk.countLegalValues(varExplored.first, varExplored.second);
 
+		var = empty.front();
+		empty.pop_front();
+
+		int legalValueCounterExplored = sdk.countLegalValues(var.first, var.second);
+
+		// réinitialise la liste si une valeur plus faible est trouvée
 		if (legalValueCounterExplored < legalValueCounter) {
 			legalValueCounter = legalValueCounterExplored;
-			var = varExplored;
 			vars.clear();
 		}
+
+		// ajoute la case à la liste si le nombre de valeur possible est le plus faible
 		if (legalValueCounterExplored == legalValueCounter) {
-			vars.push_back(varExplored);
+			vars.push_back(var);
 		}
 	}
 
@@ -71,16 +81,24 @@ Pair Agent::DegreeHeuristic(Sudoku sdk) {
 	list<Pair> vars = MinimumRemainingValues(sdk);
 	Pair var = vars.front();
 	vars.pop_front();
+
 	int constraintCounter = countConstraints(sdk);
+
 	while (!vars.empty()) {
+
 		Pair varExplored = vars.front();
 		vars.pop_front();
-		Sudoku copy = sdk.copy();
+
 		list<int> legalValues = sdk.getLegalValues(varExplored.first, varExplored.second);
-		
+
 		if (!legalValues.empty()) {
+
+			// determine le nombre de contrainte à l'étape suivante
+			Sudoku copy = sdk.copy();
 			copy.set(varExplored.first, varExplored.second, legalValues.front());
 			int constraintCounterExplored = countConstraints(copy);
+
+			// conserve la case ayant le plus de contrainte
 			if (constraintCounterExplored > constraintCounter) {
 				constraintCounter = constraintCounterExplored;
 				var = varExplored;
@@ -91,15 +109,15 @@ Pair Agent::DegreeHeuristic(Sudoku sdk) {
 }
 
 int Agent::countConstraints(Sudoku sdk) {
-	list<Pair> empty = sdk.getEmptyCells();
-	Pair var = empty.front();
-	empty.pop_front();
-	int constraintCounter = 9 - sdk.countLegalValues(var.first, var.second);
 
+	list<Pair> empty = sdk.getEmptyCells();
+	int constraintCounter = 0;
+
+	// parcours les case non vide et ajoute le nombre de contraintes
 	while (!empty.empty()) {
-		Pair varExplored = empty.front();
+		Pair var = empty.front();
 		empty.pop_front();
-		constraintCounter += 9 - sdk.countLegalValues(varExplored.first, varExplored.second);
+		constraintCounter += 9 - sdk.countLegalValues(var.first, var.second);
 	}
 
 	return constraintCounter;
@@ -111,14 +129,18 @@ Sudoku Agent::backtrackingSearch(const Sudoku& sdk) {
 }
 
 pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
-	//sdk.printGrid();
+
+	// test si la grille est valide
 	list<Pair> empty = sdk.getEmptyCells();
 	if (empty.empty()) return make_pair(sdk, true);
 
-	//Pair var = MinimumRemainingValue(sdk);
-	Pair var = DegreeHeuristic(sdk);
+	// détermine la case à explorer
+	Pair var = MinimumRemainingValue(sdk);
+	//Pair var = DegreeHeuristic(sdk);
 
 	list<int> legalValues = sdk.getLegalValues(var.first, var.second);
+
+	// parcours les valeurs possible
 	while (!legalValues.empty()) {
 		
 		int value = legalValues.front();
@@ -136,6 +158,6 @@ pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
 	return make_pair(sdk, false);
 }
 
-Pair Agent::LeastConstrainingValue(Sudoku sudoku) {
+Pair Agent::LeastConstrainingValue(Sudoku sdk) {
     return Pair();
 }
