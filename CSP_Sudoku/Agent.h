@@ -8,7 +8,7 @@ private:
 	Pair MinimumRemainingValue(Sudoku sdk);
 	list<Pair> MinimumRemainingValues(Sudoku sdk);
 	Pair DegreeHeuristic(Sudoku sdk);
-	Pair LeastConstrainingValue(Sudoku sdk);
+	int LeastConstrainingValue(Sudoku sdk, Pair var);
 	Sudoku backtrackingSearch(const Sudoku& sdk);
 	pair<Sudoku, bool> recursiveBacktrackingSearch(Sudoku sudoku);
 	int countConstraints(Sudoku sudoku);
