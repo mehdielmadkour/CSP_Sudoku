@@ -1,8 +1,6 @@
 #include "Sudoku.h"
 
 
-Sudoku::Sudoku() {}
-
 Sudoku::Sudoku(const string& file) {
 	fstream fs;
 	fs.open(file, fstream::in);
@@ -229,13 +227,4 @@ list<Pair> Sudoku::getEmptyCells() {
 	}
 
 	return empty;
-}
-
-Sudoku Sudoku::copy() {
-	Sudoku copy = Sudoku();
-	for (int i = 0; i < 9; i++)
-		for (int j = 0; j < 9; j++) {
-			copy.grid[i][j] = this->grid[i][j];
-		}
-	return copy;
 }

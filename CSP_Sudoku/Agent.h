@@ -7,12 +7,11 @@ private:
 	Sudoku sudoku;
 	Pair MinimumRemainingValue(Sudoku sdk);
 	list<Pair> MinimumRemainingValues(Sudoku sdk);
-	Pair DegreeHeuristic(Sudoku sudoku);
-	int LeastConstrainingValue(Sudoku sudoku, Pair var);
+	Pair DegreeHeuristic(Sudoku sdk);
+	Pair LeastConstrainingValue(Sudoku sdk);
 	Sudoku backtrackingSearch(const Sudoku& sdk);
 	pair<Sudoku, bool> recursiveBacktrackingSearch(Sudoku sudoku);
 	int countConstraints(Sudoku sudoku);
-	int countNeighborsConstraintReduction(Sudoku sdk, Pair var);
 public:
 	explicit Agent(Sudoku sudoku);
     virtual ~Agent() = default;
