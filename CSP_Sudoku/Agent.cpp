@@ -82,7 +82,7 @@ Pair Agent::DegreeHeuristic(Sudoku sdk) {
 	vars.pop_front();
 
 	int constraintCounter = countConstraints(sdk);
-	// Tant que la liste des cases vides avec le moins de valeurs légales n'est pas vide
+	// Tant que la liste des cases vides avec le moins de valeurs lï¿½gales n'est pas vide
 	while (!vars.empty()) {
 
 		Pair varExplored = vars.front();
@@ -124,29 +124,29 @@ int Agent::countConstraints(Sudoku sdk) {
 
 int Agent::LeastConstrainingValue(Sudoku sdk,Pair var) 
 {
-	//Nombre de voisins maximale qui possède la même valeur légale que la case (var.first, var.second)
+	//Nombre de voisins maximale qui possï¿½de la mï¿½me valeur lï¿½gale que la case (var.first, var.second)
 	int counter = 16;
-	//Valeur à renvoyé (initialement à -1 comme pour une case vide)
+	//Valeur ï¿½ renvoyï¿½ (initialement ï¿½ -1 comme pour une case vide)
 	int value = -1;
 	//Liste de tous les voisins
 	list<Pair> neighbors;
 	//Liste des cases voisines vides
 	list<Pair> consideredNeighbors;
-	//Liste des valeurs légales de la case (var.first, var.second)
+	//Liste des valeurs lï¿½gales de la case (var.first, var.second)
 	list<int> legalValues = sdk.getLegalValues(var.first, var.second);
 
-	//récupère la liste des voisins (ligne, colonne) de la case de coordonnée var
+	//rï¿½cupï¿½re la liste des voisins (ligne, colonne) de la case de coordonnï¿½e var
 	for (int i = 0; i < 9; i++) 
 	{
-		//récupère la ligne des voisins
+		//rï¿½cupï¿½re la ligne des voisins
 		if (i != var.first) 
 		{
-			neighbors.push_back(Pair(i, var.second));
+			neighbors.emplace_back(i, var.second);
 		}
-		//récupère la colonne des voisins
+		//rï¿½cupï¿½re la colonne des voisins
 		if (i != var.second) 
 		{
-			neighbors.push_back(Pair(var.first, i));
+			neighbors.emplace_back(var.first, i);
 		}
 	}
 	//Pour chaque voisin check s'il est vide
@@ -161,19 +161,19 @@ int Agent::LeastConstrainingValue(Sudoku sdk,Pair var)
 			consideredNeighbors.push_back(p);
 		}
 	}
-	//Pour chaque valeur légale pour la pair en argument de la question
+	//Pour chaque valeur lï¿½gale pour la pair en argument de la question
 	while(!legalValues.empty()) {
 		int v = legalValues.front();
 		legalValues.pop_front();
 		int tmpcounter = 0;
 		list<Pair> copyNeighbors = consideredNeighbors;
-		//Vérification pour chaque voisin
+		//Vï¿½rification pour chaque voisin
 		while(!copyNeighbors.empty())
 		{
 			Pair tmp = copyNeighbors.front();
 			copyNeighbors.pop_front();
 			list<int> tmpLegalValues = sdk.getLegalValues(tmp.first, tmp.second);
-			//Comparaison avec chaque valeur légale du voisin
+			//Comparaison avec chaque valeur lï¿½gale du voisin
 			while (!tmpLegalValues.empty())
 			{
 				int c = tmpLegalValues.front();
@@ -186,7 +186,7 @@ int Agent::LeastConstrainingValue(Sudoku sdk,Pair var)
 		//Si la valeur v est moins contraigante pour les voisins elle est retenue
 		if (tmpcounter < counter) {
 			counter = tmpcounter;
-			//La valeur à retourner est mise à jour à chaque fois qu'on tombe sur une valeur légale moins contraignante
+			//La valeur ï¿½ retourner est mise ï¿½ jour ï¿½ chaque fois qu'on tombe sur une valeur lï¿½gale moins contraignante
 			value = v;
 		}
 	}
@@ -194,11 +194,11 @@ int Agent::LeastConstrainingValue(Sudoku sdk,Pair var)
 }
 
 Sudoku Agent::backtrackingSearch(const Sudoku& sdk) {
-	pair<Sudoku, bool> result = recursiveBacktrackingSearch(sdk);
+	pair<Sudoku, bool> result = recursiveBacktracking(sdk);
 	return result.first;
 }
 
-pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
+pair<Sudoku, bool> Agent::recursiveBacktracking(Sudoku sdk) {
 
 	// test si la grille est valide
 	list<Pair> empty = sdk.getEmptyCells();
@@ -219,7 +219,7 @@ pair<Sudoku, bool> Agent::recursiveBacktrackingSearch(Sudoku sdk) {
 		Sudoku copy = sdk;
 		copy.set(var.first, var.second, value);
 		
-		pair<Sudoku, bool> result = recursiveBacktrackingSearch(copy);
+		pair<Sudoku, bool> result = recursiveBacktracking(copy);
 
 		if (result.second){
             return result;

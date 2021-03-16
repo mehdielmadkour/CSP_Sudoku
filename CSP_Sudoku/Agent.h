@@ -10,7 +10,7 @@ private:
 	Pair DegreeHeuristic(Sudoku sdk);
 	int LeastConstrainingValue(Sudoku sdk, Pair var);
 	Sudoku backtrackingSearch(const Sudoku& sdk);
-	pair<Sudoku, bool> recursiveBacktrackingSearch(Sudoku sudoku);
+    pair<Sudoku, bool> recursiveBacktracking(Sudoku sdk);
 	int countConstraints(Sudoku sudoku);
 public:
 	explicit Agent(Sudoku sudoku);
